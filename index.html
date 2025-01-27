@@ -1,317 +1,258 @@
 
+
 <html>
-  <head>
- 
-	  <title>Tatra Banka NDEP Agent Testing</title>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<head>
+<title>FTA Testing</title>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style type="text/css">
+.output{
+    margin-top: 20px;
+}
+</style>
+</head>
+<body     style="background-color: #ffffff;">
+<h1>FTA Testing</h1>
+<div class="CurrentFL"></div>
+<div class="CurrentPage"></div>
 
-    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0" />
+<h4>Page Time :: <label id="minutes">00</label>:<label id="seconds">00</label></h4>
 
-    <script
-			  src="https://code.jquery.com/jquery-3.6.0.min.js"
-			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-			  crossorigin="anonymous"></script>
-    <script language="javascript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script language="javascript" type="text/javascript" src="script.js"></script>
-    <script language="javascript" type="text/javascript" src="tatrabankaReference.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <style>
-      @media (min-width: 1100px) {
-        h1:after {
-          content: ' (Large screen)';
+<script type="text/javascript">
+var nuanceData = {
+        "errors": {
+"errorCount":0, 
+"errorType":"Failed to enter fields"
+  },
+  "Journey Completion": "login to MyAviva",
+  "campaign": "Example",
+  "Contact Name": "Sample, Test",
+
+    "existingPolicies":[{
+	  "policyNumber": "PO3243432432",
+        "policyPremium": "755.00",
+        "policyExcess": "250.00",
+        "policyCategory": "Motor",
+	},
+	{
+	  "policyNumber": "HA3243432432",
+        "policyPremium": "745.00",
+        "policyExcess": "250.00",
+        "policyCategory": "Health",
+	}],
+    "quotesInCart": [{
+        "quoteName": "Motor insurance quote",
+        "quoteNumber": "QTE086989080",
+        "quotePremium": "755.00",
+        "quoteMonthlyPayments": "68.84",
+        "quoteCategory": "Motor",
+        "quoteExcess": "250.00",
+        "quoteCompletion": true,
+    }],
+    "addOnsAddedToCart": [{
+            "productName": "Motor Legal cover",
+            "productPrice": "29.00",
+            "paymentType": "annual"
+        },
+        {
+            "productName": "Standard courtesy car",
+            "productPrice": "27.00",
+            "paymentType": "annual"
         }
-      } 
-      @media (max-width: 1100px) {
-        h1:after {
-          content: ' (Medium screen)';
-        }
-      }
-      @media (max-width: 480px) {
-        h1:after {
-          content: ' (Small screen)';
-        }
-      }
-      .panel {
-        /* width: 50%; */
-        padding: 1em;
-        margin-right: 5px;
-      }
-    </style>
-  </head>
-  <body style="margin-left: 15px;">
-    <img src="https://www.nuance.com/content/dam/nuance/shared-images/logos/nuance/logo-nuance-black-horizontal.png" />
-    <br/>
-
-    <h1>Tatra Banka SK - NDEP Agenten-Test</h1>
-    <br/>
-
-    <h3>
-      Let's work <span style="color: #ff5400 !important">together</span>
-    </h3>
-    <!--'-->
-    <p>To launch the virtual assistant, please click the button on the bottom right.</p>
-    <br/>
-    <div id="Nuance-chat-anchored"></div>
-
-    <script type="text/javascript">
-      function updatePcid(){
-
-        let map={};
-        $(".link").each(function(){
-                let t = $(this).text();
-                let v = $(this).attr("href");
-                map[t] = v;
-        });
-
-
-        let cookieVal = Cookies.get("pcid");
-        if (!cookieVal) {
-                cookieVal = "" + parseInt(Math.random()*100000000) + "" + parseInt(Math.random()*100000000);
-                Cookies.set("pcid", cookieVal);
-        }
-        if (!nuanceData) {
-                nuanceData = {};
-        }
-        nuanceData.pcid = cookieVal;
-        $("#pcid").val(cookieVal);
-        $("#pcid").on("change keyup", function(){
-                let pcid = $(this).val();
-                nuanceData.pcid = pcid;
-                Cookies.set("pcid", pcid);
-                
-                $(".link").each(function(){
-                        let t = $(this).text();
-                        let link = map[t];
-                        link = link.replace("pcid-1", pcid);
-                        $(this).attr("href", link);
-                });
-        
-        });
-        $("#pcid").trigger("change");
-  }
-	    
-	    window.sendAuthResult = mockNDEP.sendAuthResult;
-      var url_string = window.location.href;
-      var url = new URL(url_string);
-      var DC = url.searchParams.get("DC");
-	  updatePcid();      
-
-      var inqSiteID = 38375574;
-      if(DC == "PREPROD_OLD") {
-        // PREPROD
-        window.v3LanderConfig = window.v3LanderConfig || {"preprod": true};
-	      window.v3LanderConfig.hostedFileURL = "/ps/tatrabanka/hostedfilePREPRODold.html";
-        window.v3LanderConfig.vanityDomain = "https://tatrabanka-preprod.digital.nuance.com";
-        window.v3LanderConfig.mediaUrl = "https://media-tatrabanka-preprod.digital.nuance.com";
-      } else if(DC == "PREPROD") {
-        // PREPROD
-        window.v3LanderConfig = window.v3LanderConfig || {"preprod": true};
-	      window.v3LanderConfig.hostedFileURL = "/ps/tatrabanka/hostedfilePREPROD.html";
-        window.v3LanderConfig.vanityDomain = "https://tatrabanka-preprod.lle.digital.nuance.com";
-        window.v3LanderConfig.mediaUrl = "https://media-tatrabanka-preprod.lle.digital.nuance.com";
-      } else {
-        // PROD
-        window.v3LanderConfig = window.v3LanderConfig || {"preprod": false};
-        window.v3LanderConfig.hostedFileURL = "/ps/tatrabanka/hostedfile.html";
-        window.v3LanderConfig.vanityDomain = "https://tatrabanka.digital.nuance.com";
-        //window.v3LanderConfig.mediaUrl = "https://media-tatrabanka.digital.nuance.com";
-        window.v3LanderConfig.mediaUrl = "https://media-eu2.digital.nuance.com";
-      }
-      $(document).ready((alias) => {
-        // console.log("starting inqChat with nuanceData.pcid: " + nuanceData.pcid);
-	      console.log("starting inqChat");
-        $.getScript(window.v3LanderConfig.vanityDomain + "/chatskins/launch/inqChatLaunch10006716.js")
-      })
-    </script>
-
-<div class="panel panel-primary">
-  <div id="InternetBanking">
-      <form>
-        <input type="checkbox" id="loggedin" name="loggedin" value="true">
-        <label for="loggedin">loggedin</label><br>
-        <button type="button" onclick="Inq.reinitChat()">Inq.reinitChat()</button>
-      </form>
-    </div>
-    <a href="#" onclick='initAuth("1234567890123456", window.nuanceData.authRequestToken, sendAuthResult); false'>click here to simulate initAuth</a> set window.nuanceData.authRequestToken before.<br>		
-	</div>
-  <div class="panel panel-primary">
-
-    <!-- <a href="#" id="createpcid">create pcid (Persistant Customer ID)</a><br> -->
-    <button onClick="resetNuanceData()">resetNuanceData</button>
-    <button onClick="syncNuanceData()">syncNuanceData</button>
-    <button onClick="addMockListOfCards()">addMockListOfCards</button> 
-    <button onClick="addMockAccounts()">addMockAccounts</button>
-    <br>
-    <label>nuanceData: </label> 
-    <textarea title="the current nuanceData" class="nuanceData" id="nuanceData"> ... </textarea>
-    <textarea title="nuanceData with parsed JSON" class="nuanceData" id="nuanceDataParsed"> ... </textarea>
-    <br>
-    
-      pcid: <input type="text" id="pcid" style="width:300px"><br>
-
-    <span id="pcidMsg"></span><br>
-    <br>
-    <a href="https://moja.tatrabanka.sk/app/openChatbot/pcid-1" class="link">Open App Android - moja</a><br><br>
- <a href="https://ui-dev.nina.nuance.com/ps/tatrabanka/app/pcid-1" class="link">Open App Android - ui-dev</a><br><br>
-    
-    <a href="myapp://pcid-1" class="link">Open App iOS</a>
-
-    <br><br><br>
-    App Links from PCID in the Cookie. PCID in the Cookie <span id="pcidlabel"></span><br>
-    <a href1="https://moja.tatrabanka.sk/app/openChatbot/pcid-1" class="link1">Open App Android - moja</a><br><br>
-    <a href1="https://ui-dev.nina.nuance.com/ps/tatrabanka/xyz/pcid-1" class="link1">Open App Android - ui-dev</a><br><br>
-    <a href1="https://ui-dev.nina.nuance.com/ps/tatrabanka/?pcid=pcid-1" class="link1">Open App Android 2 - ui-dev</a><br><br>
-    <a href1="myapp://pcid-1" class="link1">Open App iOS</a>
-
-	<script>
-	function updatePcid1() {
-		let co = Cookies.get("pcid_TB");
-                $("#pcidlabel").html(""+co);
-                $(".link1").each(function(){
-                        let href = $(this).attr("href1");
-		 	href = href.replace("pcid-1", co);	
-			$(this).attr("href", href);
-                });
-		setTimeout(function(){
-			updatePcid1();
-		},1000);
-	}
-	updatePcid1();
-	</script>
-  </div>
-
-<br>
-<div class="panel panel-primary">
-  <div id="LiveChat">
-    <p>Set <i>state.context.NinaVars.testLC</i> to go to live chat.</p>
-    <form>
-    <input type="checkbox" id="testLiveChat" name="testLiveChat" value="false">
-    <label for="testLiveChat">Test Live Chat</label><br>
-    </form>
-  </div>
-</div>
-
-
-<script>
-  // window.addEventListener('click', function (e) {
-  //   console.log("### CLICK in window handler on id=" + e?.target?.id);
-  //   if(e.target && e.target.id == 'tcChat_btnCloseChat_img') {
-  //     console.log("### CLICK in window handler on tcChat_btnCloseChat_img");
-  //     
-  //     // // delete window.nuanceData.pcid;
-  //     // // window.nuanceData.pcid = "";
-  //     // let pcid = uuidv4();
-  //     // window.nuanceData.pcid = pcid;
-  //     // $("#pcid").val(pcid);
-  //     // updatePcid();
-  //   }
-  // });
-
-  /* these IDs are not existing on startup!
-  document.getElementById("tcChat_btnCloseChat").addEventListener('click', function (e) {
-    console.log("### CLICK in tcChat_btnCloseChat handler");
-    if(e.target && e.target.id== 'tcChat_btnCloseChat_img') {
-      console.log("### CLICK in tcChat_btnCloseChat handler on tcChat_btnCloseChat_img");
-    }
-    delete window.nuanceData.pcid;
-  });
-  document.getElementById("tcChat_btnCloseChat_img").addEventListener('click', function (e) {
-    console.log("### CLICK in tcChat_btnCloseChat_img handler");
-    if(e.target) {
-      console.log("### CLICK in tcChat_btnCloseChat_img handler on " + e.target.id);
-    }
-    delete window.nuanceData.pcid;
-  });
-  */
-  pollVarsStatus = {
-    oldval: ""
-  };
-  function pollVars() {
-    // nuanceData
-    try {
-      let item = $('#nuanceData');
-      let newval = JSON.stringify(nuanceData, 0, 2);
-      let oldval = pollVarsStatus.oldval;
-      if(newval != oldval) {
-        // display New value
-        item.val(newval);
-        pollVarsStatus.oldval = newval;
-      }
-    } catch (e) {
-    }
-    setTimeout(pollVars, 1000);
-  }
-  // pollVars();
-
-  $('#nuanceData').on("change", function(event) {
-    console.log("nuanceData.onChange");
-    let item = $('#nuanceData');
-    let oldval = item.val();
-    try {
-      let nuanceData = JSON.parse(oldval);
-      setNuanceData(nuanceData);
-    } catch (e) {
-      // ignore failures?
-      // mark failing by red border item
-      item.addClass("inerror");
-    }
-  });
-
-  $('#nuanceDataParsed').on("change", function(event) {
-    console.log("nuanceDataParsed.onChange");
-    let item = $('#nuanceDataParsed');
-    let oldval = item.val();
-    try {
-      let oldobj = JSON.parse(oldval);
-      let nuanceData = {}; 
-      for (const key in oldobj) {
-        if (Object.hasOwnProperty.call(oldobj, key)) {
-          const element = oldobj[key];
-          if(typeof(element) == "object") {
-            nuanceData[key] = JSON.stringify(element);
-          } else {
-            nuanceData[key] = element;
-          }
-        }
-      }
-      setNuanceData(nuanceData);
-    } catch (e) {
-      // ignore failures?
-      // mark failing by red border item
-      item.addClass("inerror");
-    }
-  });
-
-
-$(window).on("load", function(){
-	updatePcid();
-});
-  // we remove the pcid logic here in favor of setting it in the BR
-  //$('#pcid').bind('input propertychange', function() {
-  //  updatePcid();
-  //});
-  //
-  // var cookieVal = Cookies.get("pcid");
-  // if (cookieVal && cookieVal.length > 0){
-  // $("#pcid").val(cookieVal);
-  //   updatePcid();
-  // }
-  // $("#createpcid").click(function(){
-  //   // var rand = Math.random();
-  //   // var pcid = '{"rand":"' + rand + '"}';
-  //   // pcid = "" + rand;
-  //   pcid = uuidv4();
-  //   $('#createpcid').append(" close chat and reload to start new async chat with new pcid!");
-  //   // TODO: remove above message and stop chat
-  //   // $("#pcid").val($("#pcid").val() + " " + defaultpcid);
-  //   $("#pcid").val(pcid);
-  //   updatePcid();
-  // });
+    ],
+    "addOnsRemovedToCart": [{
+        "productName": "Enhanced courtesy car",
+        "productPrice": "34.00",
+        "paymentType": "annual"
+    }],
+    "AppliedDiscounts": "",
+    "CurrentCartValue": "755.00",
+	"getEmail": "sivaprasad5317@gmail.com",
+}
 </script>
 
-    <!--
-      <script type="text/javascript" charset="utf-8" src="https://tatrabanka.digital.nuance.com/chatskins/launch/inqChatLaunch10006716.js"></script>
-    -->
-  </body>
+<script type="text/javascript">
+
+
+
+    function getDeviceType() {
+        $('.output').empty();
+        $('.output').html('<p>Result :: ' + inqFrame.Inq.FlashPeer.getDeviceType() + '</p>');
+        console.log(inqFrame.Inq.FlashPeer.getDeviceType());
+    }
+
+    function getVitalCookie() {
+        $('.output').empty();
+        $('.output').html('<p>Result :: ' + inqFrame.Inq.CM.cookies.inqVital._ig + '</p>');
+        console.log(inqFrame.Inq.CM.cookies.inqVital._ig);
+
+    }
+
+    function getURL() {
+        $('.output').empty();
+        $('.output').html('<p>Result :: ' + document.URL + '</p>');
+        console.log(document.URL);
+    }
+
+    function getAgentString() {
+        $('.output').empty();
+        $('.output').html('<p>Result :: ' + navigator.userAgent + '</p>');
+        console.log(document.URL);
+    }
+
+
+    function getBlockers() {
+        $('.output').empty();
+        $('.output').html('<p>Result :: ' + JSON.stringify(inqFrame.Inq.CHM.blocked) + '</p>');
+        console.log(JSON.stringify(inqFrame.Inq.CHM.blocked));
+    }
+
+    function setValue(setName, setValue) {
+        $('.output').empty();
+        inqFrame.Inq.PM.getVar(setName).z3(setValue);
+        $('.output').html('<p><strong>Result SET ::</strong> ' + setName + ' :: ' + inqFrame.Inq.PM.getVar(setName).z0() + '</p>');
+        console.log(inqFrame.Inq.PM.getVar(setName).z0());
+        $('.output').removeClass('hidden');
+        $('.output').show();
+        setTimeout(function () { $('.output').hide() }, 5000);
+    }
+
+    function getValue() {
+        $('.output').empty();
+        $('.output').html('<p><strong>Result GET :: </strong>' + inqFrame.Inq.PM.getVar($('.getValue').val()).z0() + '</p>');
+        console.log(inqFrame.Inq.PM.getVar($('.getValue').val()).z0());
+    }
+
+
+</script>
+
+<h3>Other Buttons</h3>
+<div class="container">
+  <div class="row">
+    <div class="col">
+<button onclick="getDeviceType()" class="btn btn-info">Device</button>
+<button onclick="getVitalCookie()" class="btn btn-info">AmIAbleToChat</button>
+<button onclick="getURL()" class="btn btn-info">URL</button>
+<button onclick="getAgentString()" class="btn btn-info">AgentString</button>
+<button onclick="getBlockers()" class="btn btn-info">Blockers</button>
+</div>
+</div>
+</div>
+<h3>Set Care Sales </h3>
+<div class="container">
+  <div class="row">
+    <div class="col">
+<button onclick="setValue('palceHolder',true)" class="btn btn-info">CARE</button>
+<button onclick="setValue('palceHolder',false)" class="btn btn-info">SALES</button>
+</div>
+</div>
+</div>
+
+</div>
+
+<h3>Pages</h3>
+<button onclick="Inq.reinitChat(38375801);" class="btn btn-info">Broker</button>
+<button onclick="Inq.reinitChat(38213752);" class="btn btn-info">Customer</button>
+
+<h3>DataPass</h3>
+
+<button onclick="addDP()" class="btn btn-info">Add inqCustData Pass</button>
+
+<h3>C2C Containers</h3>
+<p>Nuance-chat-anchored</p><div id="Nuance-chat-anchored"></div>
+
+<p>nuanMessagingFrame</p><div id="nuanMessagingFrame"></div>
+
+
+<script language="javascript" type="text/javascript" charset="utf-8" src="https://fta-preprod.lle.digital.nuance.com/chatskins/launch/inqChatLaunch10006574.js"></script>
+
+<script type="text/javascript">
+    setTimeout(
+      function () {
+          var minutesLabel = document.getElementById("minutes");
+          var secondsLabel = document.getElementById("seconds");
+          var totalSeconds = 0;
+          setInterval(setTime, 1000);
+
+          function setTime() {
+              ++totalSeconds;
+              secondsLabel.innerHTML = pad(totalSeconds % 60);
+              minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+          }
+
+          function pad(val) {
+              var valString = val + "";
+              if (valString.length < 2) {
+                  return "0" + valString;
+              }
+              else {
+                  return valString;
+              }
+          }
+
+      }, 1500);
+</script>
+
+<!--Chat Event Notification-->
+<script type="text/javascript">
+
+    function isC2CbuttonDisplayed(evt) {
+        console.log('*** C2C Displayed has happened :: ' + evt.bizRuleName + ' ***');
+        console.log(evt);
+    }
+
+    function isC2CButtonClicked(evt) {
+        console.log('*** C2C button has been clicked :: ' + evt.bizRuleName + ' ***');
+        console.log(evt);
+    }
+
+    function isProactiveOverLayDisplayed(evt) {
+        console.log('*** chat window shown :: ***');
+
+
+        if (evt.chatType === "POPUP" && (evt.businessUnitID == 19001116 || evt.businessUnitID == 19001114 || evt.businessUnitID == 19001115 || evt.businessUnitID == 19001106)) {
+            console.log('*** SHOWN PROACTIVE OVERLAY ***');
+        }
+        console.log(evt);
+    }
+
+    function hasOnChatEngaged(evt) {
+        console.log('*** Chat has now engaged :: ' + evt.bizRuleName + ' ***');
+        console.log(evt);
+    }
+
+    function isChatClosed(evt) {
+        console.log('*** Chat window has now closed :: ' + evt.bizRuleName + ' ***');
+        console.log(evt);
+    }
+
+    var chatLaunchedListener = {
+        onChatLaunched: isProactiveOverLayDisplayed
+    };
+
+    var c2cDisplayed = {
+        onC2CDisplayed: isC2CbuttonDisplayed
+    };
+
+    var c2cClickedListener = {
+        onC2CClicked: isC2CButtonClicked
+    };
+
+    var chatEngagedListener = {
+        onChatEngagedEvent: hasOnChatEngaged
+    };
+
+    var chatClosedListener = {
+        onChatClosed: isChatClosed
+    };
+
+    var InqRegistry = {
+        chatListeners: [chatLaunchedListener, chatClosedListener],
+        listeners: [c2cDisplayed, c2cClickedListener],
+        saleListeners: [chatEngagedListener]
+    };
+
+</script>
+</body>
 </html>
