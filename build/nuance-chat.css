@@ -1,0 +1,94 @@
+.floating-nuan-chat {
+  position: fixed;
+  height:1px;
+  width:1px;
+  right:0px;
+  bottom:0px;
+  background: transparent;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  border-style: none;
+  border-width: 0px;
+  z-index: 99999;
+  padding:5px;
+  transition: height 200ms linear, opacity 1000ms linear;
+  box-sizing: border-box;
+}
+body {
+  margin:0px;
+}
+
+body.chatopen {
+  position: fixed;
+        width: 100%;
+        top: 0px;
+        overflow: hidden;
+}
+
+/*
+@media only screen and (min-width : 320px) and (max-width : 560px) {
+    body.chatopen {-webkit-text-size-adjust: none;}
+}
+*/
+
+.floating-nuan-chat iframe {
+  width: 1px;
+  height:1px;
+  opacity: 0;
+  transition: opacity 1000ms linear;
+  z-index: 100;
+  position: relative;
+}
+
+.floating-nuan-chat iframe.enter {
+  opacity: 1;
+  box-shadow: 2px 3px 19px -2px rgba(0,0,0,1);
+  border-radius: .5em;
+}
+
+
+.floating-nuan-chat.adjust-height {
+  top:0px;
+  height:auto !important;
+}
+
+.floating-nuan-chat.adjust-width {
+  left:0px;
+  width:auto !important;
+}
+
+.floating-nuan-chat.adjust-height iframe {
+  transition:none;
+  height:100% !important;
+}
+
+.floating-nuan-chat.adjust-width iframe {
+  transition:none;
+  width:100% !important;
+}
+
+.floating-nuan-chat.adjust-height .nuance-chat-button {
+  display:none;
+}
+
+@media only screen and (min-width: 751px) and (max-width: 995px) {
+  /* #nuanChatStage{
+    width:  300px !important;
+    height: 621px !important;
+  } */
+  iframe[title="Chat Window"] {
+    height:100% !important;
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  #nuanChatStage{
+    height:100% !important;
+    width: 100% !important;
+  }
+iframe[title="Chat Window"] {
+    height:100% !important;
+    width: 100% !important;
+ }
+}
