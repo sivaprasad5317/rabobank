@@ -119,19 +119,6 @@
         }
       }
 
-// Get the iframe element
-const iframe = document.querySelector('iframe[src*="nuanceChat.html"]'); // Adjust the selector to match the iframe
-
-if (iframe) {
-  // Send a message to the iframe
-  iframe.contentWindow.postMessage(
-    {
-      type: 'setMediaUrl', // Custom message type
-      mediaUrl: 'https://media-demo01-eu2.lle.digital.nuance.com'
-    },
-    'https://rabobank-preprod.lle.digital.nuance.com' // Replace with the iframe's origin
-  );
-}
 
     </script>
 
