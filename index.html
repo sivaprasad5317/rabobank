@@ -1,258 +1,131 @@
 
-
 <html>
-<head>
-<title>FTA Testing</title>
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script language="javascript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style type="text/css">
-.output{
-    margin-top: 20px;
-}
-</style>
-</head>
-<body     style="background-color: #ffffff;">
-<h1>FTA Testing</h1>
-<div class="CurrentFL"></div>
-<div class="CurrentPage"></div>
+  <head>
+    <title>Rabobank CCSD NDEP Agent Testing - WebSDK</title>
+    <!-- WebSDK / JSSDK 
+      SDK file can be found here
+        https://git.labs.nuance.com/entrd/ndep-front-end/websdk-bootstrap#ldapnuance
+      Documentation is in:
+        Nuance WebSDK Overview Guide - V1.0.pdf
+      Sample Code:
+      you can check the code in this page - view-source:https://rabobank.beesuarez.com/websdk/index.htm?nuance=launchTestChatEN
 
-<h4>Page Time :: <label id="minutes">00</label>:<label id="seconds">00</label></h4>
+    -->
+    <link rel="stylesheet" type="text/css" href="build/nuance-chat.css"></link>
+    <link rel="stylesheet" type="text/css" href="styles.css"></link>
 
-<script type="text/javascript">
-var nuanceData = {
-        "errors": {
-"errorCount":0, 
-"errorType":"Failed to enter fields"
-  },
-  "Journey Completion": "login to MyAviva",
-  "campaign": "Example",
-  "Contact Name": "Sample, Test",
+    <!-- END WebSDK / JSSDK -->
 
-    "existingPolicies":[{
-	  "policyNumber": "PO3243432432",
-        "policyPremium": "755.00",
-        "policyExcess": "250.00",
-        "policyCategory": "Motor",
-	},
-	{
-	  "policyNumber": "HA3243432432",
-        "policyPremium": "745.00",
-        "policyExcess": "250.00",
-        "policyCategory": "Health",
-	}],
-    "quotesInCart": [{
-        "quoteName": "Motor insurance quote",
-        "quoteNumber": "QTE086989080",
-        "quotePremium": "755.00",
-        "quoteMonthlyPayments": "68.84",
-        "quoteCategory": "Motor",
-        "quoteExcess": "250.00",
-        "quoteCompletion": true,
-    }],
-    "addOnsAddedToCart": [{
-            "productName": "Motor Legal cover",
-            "productPrice": "29.00",
-            "paymentType": "annual"
-        },
-        {
-            "productName": "Standard courtesy car",
-            "productPrice": "27.00",
-            "paymentType": "annual"
+    
+
+    <!--  JQUERY
+      <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    -->
+    <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    
+    <!-- Bootstrap cdn
+    <script language="javascript" type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>  
+    <style>
+      /* overwrite some bootsrap stuff */
+      div#nuance-chat-fixed img {
+        box-sizing: content-box;
+      }
+      div#nuance-chat-fixed h3 {
+        margin-top: 20px;
+      }
+    </style>
+    <script language="javascript" type="text/javascript" src="nuanceSOSMonitor.js"></script>
+    <script language="javascript" type="text/javascript" src="unbubble.js"></script>
+    <script language="javascript" type="module">
+      import { setNuanceData } from "./script.js";
+      window.setNuanceData = setNuanceData;
+    </script>
+    <!--
+    <link rel="prefetch" href="https://media-rabobank-preprod.digital.nuance.com/flash/InqFramework.js?codeVersion=1594729657855">
+        <link rel="prefetch" href="https://rabobank-preprod.digital.nuance.com/tagserver/acif/pre-acif.js">
+        <link rel="prefetch" href="https://media-rabobank-preprod.digital.nuance.com/media/launch/acif/acif.js">
+        <link rel="prefetch" href="https://media-rabobank-preprod.digital.nuance.com/media/sites/10006508/assets/automatons/acif-configs.js">
+    -->
+  </head>
+  <body style="margin-left: 15px;">
+    <img title="Nuance logo" alt="Nuance logo" src="https://www.nuance.com/content/dam/nuance/shared-images/logos/nuance/logo-nuance-black-horizontal.png" />
+    <br/>
+
+    <h2>Rabobank CCSD - NDEP Agenten-Test</h2>
+    <br/>
+
+    <h3>
+      Let's work <span style="color: #ff5400 !important">together</span>
+    </h3>
+    <!--'-->
+    <p>To launch the virtual assistant, please click the button on the bottom right.</p>
+    <div id="content-test" style="visibility: hidden; display: none";>
+      <a href="https://www.nuance.com" target="_blank">Nuance web page in new window</a><br>
+      <a href="https://www.nuance.com" target="_blank" onclick='console.log("XXX "+this.href);event.stopPropagation();event.preventDefault();''>Nuance web page log href</a>
+    </div>
+    <div id="nuance-chat-fixed" style="position: fixed; bottom:0;right:0;z-index:9999"></div>
+    <div class="panel panel-primary">
+      <label for="nuanceData">nuanceData</label>
+      <button type="button" onclick="setWelcome_Raboshop();" >set nuanceData For Welcome_raboshop</button>
+      <button type="button" onclick="updateSOSMonitor()" >update SOSMonitor</button>
+      <br>
+      <!-- disabled="true" -->
+      <textarea style="width:400px; height:250px; white-space: pre-wrap; font-size: smaller;" id="nuanceData">
+      </textarea><br>
+    </div>
+  
+    <div id="lightbox" class="panel panel-primary" style="width:98%; height:500px; border-width:5px; border-style: solid;">
+    </div>
+
+    <script type="text/javascript">
+      function updateSOSMonitor () {
+        NuanMessaging.CIAPI.sendDataPass({ 
+          "ndepVaEvent": JSON.stringify({
+            data: {
+              SOSMonitor: nuanceData.SOSMonitor,
+              dayOfWeek: new Date().getDay()
+            },
+            event: "startChat"
+          })});
+      }
+      function setWelcome_Raboshop () {
+        window.nuanceData.pageurl="https://raboweb.sharepoint.com/sites/application-RaboShop";
+        window.nuanceData.siteid="b2697f95-0cbb-4db0-a21f-ea480c4626dd";
+        window.nuanceData.istargeted=true;
+        setNuanceData(window.nuanceData);
+      }
+      function standardNDEPUI () {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var DC = url.searchParams.get("DC");
+        var inqSiteID = 10006508;
+        window.v3LanderConfig = window.v3LanderConfig || {}; // {"a":1};
+        if(DC == "PREPROD") {
+          // PREPROD
+          window.v3LanderConfig = window.v3LanderConfig || {"preprod": true};
+          window.v3LanderConfig.hostedFileURL = "/ps/rabobank/rabobank-ccsd/hostedfilePREPROD.html";
+          window.v3LanderConfig.vanityDomain = "https://rabobank-preprod.digital.nuance.com";
+          window.v3LanderConfig.mediaUrl = "https://media-uk1-demo-002.digital.nuance.com";
+        } else {
+          // PROD
+          window.v3LanderConfig = window.v3LanderConfig || {"preprod": false};
+          window.v3LanderConfig.hostedFileURL = "/ps/rabobank/rabobank-ccsd/hostedfile.html";
+          window.v3LanderConfig.vanityDomain = "https://rabobank-preprod.lle.digital.nuance.com";
+          window.v3LanderConfig.mediaUrl = "https://media-eu2.digital.nuance.com";
         }
-    ],
-    "addOnsRemovedToCart": [{
-        "productName": "Enhanced courtesy car",
-        "productPrice": "34.00",
-        "paymentType": "annual"
-    }],
-    "AppliedDiscounts": "",
-    "CurrentCartValue": "755.00",
-	"getEmail": "sivaprasad5317@gmail.com",
-}
-</script>
+      }
+    </script>
 
-<script type="text/javascript">
-
-
-
-    function getDeviceType() {
-        $('.output').empty();
-        $('.output').html('<p>Result :: ' + inqFrame.Inq.FlashPeer.getDeviceType() + '</p>');
-        console.log(inqFrame.Inq.FlashPeer.getDeviceType());
-    }
-
-    function getVitalCookie() {
-        $('.output').empty();
-        $('.output').html('<p>Result :: ' + inqFrame.Inq.CM.cookies.inqVital._ig + '</p>');
-        console.log(inqFrame.Inq.CM.cookies.inqVital._ig);
-
-    }
-
-    function getURL() {
-        $('.output').empty();
-        $('.output').html('<p>Result :: ' + document.URL + '</p>');
-        console.log(document.URL);
-    }
-
-    function getAgentString() {
-        $('.output').empty();
-        $('.output').html('<p>Result :: ' + navigator.userAgent + '</p>');
-        console.log(document.URL);
-    }
-
-
-    function getBlockers() {
-        $('.output').empty();
-        $('.output').html('<p>Result :: ' + JSON.stringify(inqFrame.Inq.CHM.blocked) + '</p>');
-        console.log(JSON.stringify(inqFrame.Inq.CHM.blocked));
-    }
-
-    function setValue(setName, setValue) {
-        $('.output').empty();
-        inqFrame.Inq.PM.getVar(setName).z3(setValue);
-        $('.output').html('<p><strong>Result SET ::</strong> ' + setName + ' :: ' + inqFrame.Inq.PM.getVar(setName).z0() + '</p>');
-        console.log(inqFrame.Inq.PM.getVar(setName).z0());
-        $('.output').removeClass('hidden');
-        $('.output').show();
-        setTimeout(function () { $('.output').hide() }, 5000);
-    }
-
-    function getValue() {
-        $('.output').empty();
-        $('.output').html('<p><strong>Result GET :: </strong>' + inqFrame.Inq.PM.getVar($('.getValue').val()).z0() + '</p>');
-        console.log(inqFrame.Inq.PM.getVar($('.getValue').val()).z0());
-    }
-
-
-</script>
-
-<h3>Other Buttons</h3>
-<div class="container">
-  <div class="row">
-    <div class="col">
-<button onclick="getDeviceType()" class="btn btn-info">Device</button>
-<button onclick="getVitalCookie()" class="btn btn-info">AmIAbleToChat</button>
-<button onclick="getURL()" class="btn btn-info">URL</button>
-<button onclick="getAgentString()" class="btn btn-info">AgentString</button>
-<button onclick="getBlockers()" class="btn btn-info">Blockers</button>
-</div>
-</div>
-</div>
-<h3>Set Care Sales </h3>
-<div class="container">
-  <div class="row">
-    <div class="col">
-<button onclick="setValue('palceHolder',true)" class="btn btn-info">CARE</button>
-<button onclick="setValue('palceHolder',false)" class="btn btn-info">SALES</button>
-</div>
-</div>
-</div>
-
-</div>
-
-<h3>Pages</h3>
-<button onclick="Inq.reinitChat(38375801);" class="btn btn-info">Broker</button>
-<button onclick="Inq.reinitChat(38213752);" class="btn btn-info">Customer</button>
-
-<h3>DataPass</h3>
-
-<button onclick="addDP()" class="btn btn-info">Add inqCustData Pass</button>
-
-<h3>C2C Containers</h3>
-<p>Nuance-chat-anchored</p><div id="Nuance-chat-anchored"></div>
-
-<p>nuanMessagingFrame</p><div id="nuanMessagingFrame"></div>
-
-
-<script language="javascript" type="text/javascript" charset="utf-8" src="https://rabobank-preprod.lle.digital.nuance.com/chatskins/launch/inqChatLaunch10006508.js"></script>
-
-<script type="text/javascript">
-    setTimeout(
-      function () {
-          var minutesLabel = document.getElementById("minutes");
-          var secondsLabel = document.getElementById("seconds");
-          var totalSeconds = 0;
-          setInterval(setTime, 1000);
-
-          function setTime() {
-              ++totalSeconds;
-              secondsLabel.innerHTML = pad(totalSeconds % 60);
-              minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-          }
-
-          function pad(val) {
-              var valString = val + "";
-              if (valString.length < 2) {
-                  return "0" + valString;
-              }
-              else {
-                  return valString;
-              }
-          }
-
-      }, 1500);
-</script>
-
-<!--Chat Event Notification-->
-<script type="text/javascript">
-
-    function isC2CbuttonDisplayed(evt) {
-        console.log('*** C2C Displayed has happened :: ' + evt.bizRuleName + ' ***');
-        console.log(evt);
-    }
-
-    function isC2CButtonClicked(evt) {
-        console.log('*** C2C button has been clicked :: ' + evt.bizRuleName + ' ***');
-        console.log(evt);
-    }
-
-    function isProactiveOverLayDisplayed(evt) {
-        console.log('*** chat window shown :: ***');
-
-
-        if (evt.chatType === "POPUP" && (evt.businessUnitID == 19001116 || evt.businessUnitID == 19001114 || evt.businessUnitID == 19001115 || evt.businessUnitID == 19001106)) {
-            console.log('*** SHOWN PROACTIVE OVERLAY ***');
-        }
-        console.log(evt);
-    }
-
-    function hasOnChatEngaged(evt) {
-        console.log('*** Chat has now engaged :: ' + evt.bizRuleName + ' ***');
-        console.log(evt);
-    }
-
-    function isChatClosed(evt) {
-        console.log('*** Chat window has now closed :: ' + evt.bizRuleName + ' ***');
-        console.log(evt);
-    }
-
-    var chatLaunchedListener = {
-        onChatLaunched: isProactiveOverLayDisplayed
-    };
-
-    var c2cDisplayed = {
-        onC2CDisplayed: isC2CbuttonDisplayed
-    };
-
-    var c2cClickedListener = {
-        onC2CClicked: isC2CButtonClicked
-    };
-
-    var chatEngagedListener = {
-        onChatEngagedEvent: hasOnChatEngaged
-    };
-
-    var chatClosedListener = {
-        onChatClosed: isChatClosed
-    };
-
-    var InqRegistry = {
-        chatListeners: [chatLaunchedListener, chatClosedListener],
-        listeners: [c2cDisplayed, c2cClickedListener],
-        saleListeners: [chatEngagedListener]
-    };
-
-</script>
-</body>
+    
+      <script type="text/javascript" charset="utf-8" src="https://rabobank-preprod.lle.digital.nuance.com/chatskins/launch/inqChatLaunch10006508.js"></script>
+   
+    <!-- WebSDK / JSSDK -->
+    <script language="javascript" type="text/javascript" charset="utf-8" src="build/nuan_websdk_bootstrap.js"></script>
+    <script language="javascript" type="text/javascript" charset="utf-8" src="c2c-plugin/nuan-c2c.js"></script>
+    <!-- END WebSDK / JSSDK -->
+  </body>
 </html>
