@@ -1,0 +1,72 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+textarea {
+  resize: auto
+}
+
+textarea#nuanceData {
+  resize: auto;
+  background-color: lightgreen;
+  /* background-color: white; */
+  width: 427px;
+  height: 498px;
+}
+
+textarea#nuanceData.inerror {
+  background-color: #ff3333;
+}
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 2px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  a {
+    /* border: solid 1px; */
+    border: none;
+    padding:1px; }
+ 
+  .broken {
+    text-decoration: line-through;
+    text-decoration-color: red !important;
+    visibility: hidden;
+  }
+  .todo {
+    text-decoration: line-through;
+    text-decoration-color: red !important;
+    visibility: hidden;
+  }
+  /*
+  .ok {
+    background-color: lightgreen;
+    text-decoration: bold;
+    text-decoration-color: darkgreen !important; 
+    visibility: visible;
+  }
+  */
+
+  .important {
+    background-color: lightgreen;
+    /* font-style: ; */
+    font-weight: bold;
+    font-size: larger;
+    margin: 2px;
+    border-width: 2px;
+    border-radius: 5px;
+    border-color: red;
+    border-style: solid;
+}
+
+tr.availabilityCheck td iframe {
+  width: 600px;
+  height: 32px;
+}
