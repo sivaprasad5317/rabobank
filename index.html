@@ -81,7 +81,60 @@
     <div id="lightbox" class="panel panel-primary" style="width:98%; height:500px; border-width:5px; border-style: solid;">
     </div>
 
- 
+    <script type="text/javascript">
+      function updateSOSMonitor () {
+        NuanMessaging.CIAPI.sendDataPass({ 
+          "ndepVaEvent": JSON.stringify({
+            data: {
+              SOSMonitor: nuanceData.SOSMonitor,
+              dayOfWeek: new Date().getDay()
+            },
+            event: "startChat"
+          })});
+      }
+      function setWelcome_Raboshop () {
+        window.nuanceData.pageurl="https://raboweb.sharepoint.com/sites/application-RaboShop";
+        window.nuanceData.siteid="b2697f95-0cbb-4db0-a21f-ea480c4626dd";
+        window.nuanceData.istargeted=true;
+        setNuanceData(window.nuanceData);
+      }
+      function standardNDEPUI () {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var DC = url.searchParams.get("DC");
+        var inqSiteID = 10006508;
+        window.v3LanderConfig = window.v3LanderConfig || {}; // {"a":1};
+        if(DC == "PREPROD") {
+          // PREPROD
+          window.v3LanderConfig = window.v3LanderConfig || {"preprod": true};
+          window.v3LanderConfig.hostedFileURL = "/ps/rabobank/rabobank-ccsd/hostedfilePREPROD.html";
+          window.v3LanderConfig.vanityDomain = "https://rabobank-preprod.lle.digital.nuance.com";
+          window.v3LanderConfig.mediaUrl = "https://media-demo01-eu2.lle.digital.nuance.com";
+        } else {
+          // PROD
+          window.v3LanderConfig = window.v3LanderConfig || {"preprod": false};
+          window.v3LanderConfig.hostedFileURL = "/ps/rabobank/rabobank-ccsd/hostedfile.html";
+          window.v3LanderConfig.vanityDomain = "https://rabobank-preprod.lle.digital.nuance.com";
+          window.v3LanderConfig.mediaUrl = "https://media-demo01-eu2.lle.digital.nuance.com";
+        }
+      }
+
+// Get the iframe element
+const iframe = document.querySelector('iframe[src*="nuanceChat.html"]'); // Adjust the selector to match the iframe
+
+if (iframe) {
+  // Send a message to the iframe
+  iframe.contentWindow.postMessage(
+    {
+      type: 'setMediaUrl', // Custom message type
+      mediaUrl: 'https://media-demo01-eu2.lle.digital.nuance.com'
+    },
+    'https://rabobank-preprod.lle.digital.nuance.com' // Replace with the iframe's origin
+  );
+}
+
+    </script>
+
     
       <script type="text/javascript" charset="utf-8" src="https://rabobank-preprod.lle.digital.nuance.com/chatskins/launch/inqChatLaunch10006508.js"></script>
    
